@@ -1,10 +1,10 @@
 //!
 //! ctow
 //! Converts cURL command-line arguments to wget
-//! 
+//!
 
-use std::fmt;
 use std::error;
+use std::fmt;
 
 /// Public error types
 #[derive(Debug, PartialEq)]
@@ -19,10 +19,10 @@ impl fmt::Display for Errors {
         match &self {
             Errors::ArgConversion(err) => {
                 write!(f, "Conversion: {}", err)
-            },
+            }
             Errors::InvalidArgument(err) => {
                 write!(f, "Invalid Argument: {}", err)
-            },
+            }
             Errors::UnrecognisedCommand(err) => {
                 write!(f, "Unrecognized command: {}", err)
             }
@@ -31,7 +31,6 @@ impl fmt::Display for Errors {
 }
 
 impl error::Error for Errors {}
-
 
 /// converts a curl command (with or without starting with `curl`) to a wget command
 pub fn convert(curl: &[String]) -> Result<String, Errors> {
@@ -44,10 +43,10 @@ pub fn convert(curl: &[String]) -> Result<String, Errors> {
             continue; // discard a "curl" - bugfix needed, only remove curl at start of command.
         } else if arg.starts_with("http") {
             // if there is a " http", assume that it's the url (grabs the last one in the command)
-            url = vec!(("'".to_owned() + arg + "'").to_string());
+            url = vec![("'".to_owned() + arg + "'").to_string()];
         } else if arg.starts_with('-') {
             // if the arg starts with a dash, assume it's a new argument
-            args.append(&mut vec!(arg.to_string())); 
+            args.append(&mut vec![arg.to_string()]);
         } else {
             // else, append the rest of the arg to the previous arg, this helps with arguments
             // with spaces in them
@@ -60,7 +59,7 @@ pub fn convert(curl: &[String]) -> Result<String, Errors> {
             }
         }
     }
-    
+
     args.append(&mut url); // append the url last
 
     // converts the arg from curl to wget
@@ -75,19 +74,21 @@ pub fn convert(curl: &[String]) -> Result<String, Errors> {
 /// converts a curl argument to a wget argument
 fn convert_arg(arg: &str) -> Result<String, Errors> {
     // if it's the url, don't touch it
-    if arg.starts_with("<url>"){
+    if arg.starts_with("<url>") {
         Ok(String::from("<url>"))
     } else if arg.starts_with("'http") {
-        Ok(arg.to_owned()) 
+        Ok(arg.to_owned())
     } else {
         // else, replace the curl with the wget
         match arg.split(' ').collect::<Vec<&str>>()[0] {
-            "-H" => Ok(arg.replace("-H ", "--header '")
-                       .replace('\\',"\\\\") + "'"),
+            "-H" => Ok(arg.replace("-H ", "--header '").replace('\\', "\\\\") + "'"),
             "--compressed" => Ok(arg.replace("--compressed", "--compression=auto")),
             "--connect-timeout" => Ok(arg.replace("--connect-timeout ", "--timeout=")),
             "--retry" => Ok(arg.replace("--retry ", "--tries=")),
-            _ => Err(Errors::ArgConversion(format!("\x1b[1;31mNo valid substitution for argument: {}!\x1b[0m", arg)))
+            _ => Err(Errors::ArgConversion(format!(
+                "\x1b[1;31mNo valid substitution for argument: {}!\x1b[0m",
+                arg
+            ))),
         }
     }
 }
@@ -100,7 +101,10 @@ mod test {
     fn test_convert() {
         // tests the conversion of a whole command
         let test_curl1 = "curl http://example.com".to_string();
-        assert_eq!(convert(&[test_curl1]), Ok("wget 'http://example.com'".into()));
+        assert_eq!(
+            convert(&[test_curl1]),
+            Ok("wget 'http://example.com'".into())
+        );
     }
 
     #[test]
@@ -109,15 +113,15 @@ mod test {
             "-H User-Agent: Example",
             "--compressed",
             "--connect-timeout 5",
-            "--retry 3"
+            "--retry 3",
         ];
         let result_args = vec![
             "--header 'User-Agent: Example'",
             "--compression=auto",
             "--timeout=5",
-            "--tries=3"
+            "--tries=3",
         ];
-        
+
         for (i, test_arg) in test_args.iter().enumerate() {
             assert_eq!(convert_arg(test_arg), Ok(result_args[i].to_string()));
         }

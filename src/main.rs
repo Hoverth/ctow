@@ -1,7 +1,7 @@
 use std::env;
 use std::io::{self, Write};
 
-use ctow::{Errors, convert};
+use ctow::{convert, Errors};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let args: Vec<String> = env::args().collect();
@@ -13,13 +13,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         println!("{}", convert(&args[1..])?);
     } else {
         // command-line mode
-    
+
         let mut cond = true;
-        
+
         while cond {
             // enter the cli, with a nice ">" prompt
             print!("\x1b[1m> \x1b[0m");
-            match io::stdout().flush(){
+            match io::stdout().flush() {
                 Ok(()) => {
                     // if writing stdout worked, get the next line of input
                     let mut input = String::new();
@@ -53,4 +53,3 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     }
     Ok(())
 }
-
