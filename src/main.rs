@@ -1,6 +1,5 @@
 use std::env;
-use std::io;
-use std::io::Write;
+use std::io::{self, Write};
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -20,7 +19,7 @@ fn main() {
 
                     match io::stdin().read_line(&mut input) {
                         Ok(_n) => {
-                            let command = input.split(" ").collect::<Vec<_>>()[0].trim_end();
+                            let command = input.split(' ').collect::<Vec<_>>()[0].trim_end();
                             println!("{}", command);
                             match command {
                                 "help" => println!("help: prints this message\ncurl [...]: translates a curl command to a wget command\nexit: closes the program"),
@@ -29,7 +28,7 @@ fn main() {
                                     println!("\x1b[1mHere's your command!\x1b[0m\n{}", wget);
                                 }
                                 "exit" => cond = false,
-                                    _ => println!("Unrecognised command: {command}"),
+                                _ => println!("Unrecognised command: {command}"),
                             }
                         }
                         Err(error) => println!("There was an error: {error}"),
@@ -48,13 +47,13 @@ fn convert(curl: &[String]) -> String{
     let mut args: Vec<String> = vec![];
     let mut url: Vec<String> = vec!["<url>".to_string()];
     //dbg!(&curl_args);
-    for arg in curl_args.split(" ") {
+    for arg in curl_args.split(' ') {
         //println!("{:}", arg);
         if arg == "curl" {
             continue;
         } else if arg.starts_with("http") {
             url = vec!(("'".to_owned() + arg + "'").to_string());
-        } else if arg.starts_with("-") {
+        } else if arg.starts_with('-') {
             args.append(&mut vec!(arg.to_string())); 
         } else {
             let len = args.len();
