@@ -150,10 +150,16 @@ mod test {
     #[test]
     fn test_convert_args() {
         let test_args = vec![
-            "--compressed"
+            "-H User-Agent: Example",
+            "--compressed",
+            "--connect-timeout 5",
+            "--retry 3"
         ];
         let result_args = vec![
-            "--compression=auto"
+            "--header 'User-Agent: Example'",
+            "--compression=auto",
+            "--timeout=5",
+            "--tries=3"
         ];
         
         for (i, test_arg) in test_args.iter().enumerate() {
