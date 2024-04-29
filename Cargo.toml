@@ -2,7 +2,10 @@
 name = "ctow"
 version = "0.1.0"
 edition = "2021"
+license = "GPL-3.0-or-later"
+keywords = ["curl", "wget", "conversion"]
+categories = ["command-line-utilities"]
+description = "a simple rust binary utility to convert curl commands to wget commands."
+repository = "https://github.com/Hoverth/ctow"
+readme = "README.md"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
-[dependencies]
