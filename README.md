@@ -10,4 +10,4 @@ Available via `cargo install ctow`.
 
 Copyright © 2024 Thomas Dickson
 
-This code is license under the GNU GPL v3+. See LICENSE.md for more detais
+This code is license under the GNU GPL v3+. See LICENSE.md for more details
