@@ -63,7 +63,7 @@ fn convert(curl: &[String]) -> String{
                 args[len - 1] += " ";
                 args[len - 1] += arg;
             } else {
-                panic!("not a valid argument! {}", arg);
+                panic!("Not a valid argument! {}", arg);
             }
         }
     }
@@ -95,7 +95,7 @@ fn convert_arg(arg: &String) -> String {
             "--connect-timeout" => arg.replace("--connect-timeout ", "--timeout="),
             "--retry" => arg.replace("--retry ", "--tries="),
             _ => {
-                println!("No valid substitution for argument: {} !!", arg); String::from("")
+                println!("No valid substitution for argument: {}!", arg); String::from("")
             }
         }
     }

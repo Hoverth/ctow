@@ -1,8 +1,10 @@
 # CTOW
 
-curl to wget
+cURL to Wget
 
-a simple rust binary utility to convert curl commands to wget commands.
+A simple rust binary utility to convert curl commands to wget commands.
+
+Available via `cargo install ctow`.
 
 ## License
 
