@@ -4,7 +4,13 @@ cURL to Wget
 
 A simple rust binary utility to convert curl commands to wget commands.
 
+<<<<<<< HEAD
 Available via `cargo install ctow` \([https://crates.io/crate/ctow](link to crates page)\).
+=======
+Available via `cargo install ctow` 
+
+[https://crates.io/crate/ctow](link to crates page).
+>>>>>>> 308028b (doc: update README with a fixed crates.io link)
 
 ## Docs
 
