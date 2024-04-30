@@ -1,7 +1,7 @@
 use std::env;
 use std::io::{self, Write};
 
-use ctow::{convert, Errors};
+use ctow::{convert, Errors, BOLD, RED, RESET, GREY};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let args: Vec<String> = env::args().collect();
@@ -28,25 +28,25 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                         Ok(_n) => {
                             // get and match the command
                             let command = input.split(' ').collect::<Vec<_>>()[0].trim_end();
-                            println!("\x1b[3;90m{}\x1b[0m", command);
+                            println!("{GREY}{command}{RESET}");
                             match command {
                                 "help" => println!("help: prints this message\ncurl [...]: translates a curl command to a wget command\nexit: closes the program"),
                                 "curl" => {
                                     let wget = convert(&[input.trim_end().to_string()]);
                                     match wget {
-                                        Ok(wget) => println!("\x1b[1mHere's your command!\x1b[0m\n{}", wget),
-                                        Err(err) => eprintln!("\x1b[1;31mError encountered: {}\x1b[0m", err),
+                                        Ok(wget) => println!("{BOLD}Here's your command!{RESET}\n{wget}"),
+                                        Err(err) => eprintln!("{RED}Error encountered: {err}{RESET}"),
                                     }
                                 }
                                 "exit" => cond = false,
-                                _ => eprintln!("\x1b[1;31mUnrecognised command: {}\x1b[0m", Errors::UnrecognisedCommand(command.to_string())),
+                                _ => eprintln!("{RED}Unrecognised command: {}{RESET}", Errors::UnrecognisedCommand(command.to_string())),
                             }
                         }
-                        Err(error) => eprintln!("\x1b[1;31mThere was an error: {error}\x1b[0m"),
+                        Err(error) => eprintln!("{RED}There was an error: {error}{RESET}"),
                     }
                 }
                 Err(error) => {
-                    println!("There was an error: {error}")
+                    println!("{RED}There was an error: {error}{RESET}")
                 }
             }
         }

@@ -6,6 +6,12 @@
 use std::error;
 use std::fmt;
 
+/// Define some const. for pretty printing using ANSI colour codes.
+pub const BOLD: &str = "\x1b[1m";
+pub const RED: &str = "\x1b[31;1m";
+pub const RESET: &str = "\x1b[0m";
+pub const GREY: &str = "\x1b[90;3m";
+
 /// Public error types
 #[derive(Debug, PartialEq)]
 pub enum Errors {
@@ -86,8 +92,7 @@ fn convert_arg(arg: &str) -> Result<String, Errors> {
             "--connect-timeout" => Ok(arg.replace("--connect-timeout ", "--timeout=")),
             "--retry" => Ok(arg.replace("--retry ", "--tries=")),
             _ => Err(Errors::ArgConversion(format!(
-                "\x1b[1;31mNo valid substitution for argument: {}!\x1b[0m",
-                arg
+                "{RED}No valid substitution for argument: {arg}!{RESET}",
             ))),
         }
     }
