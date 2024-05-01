@@ -6,7 +6,7 @@
 use std::error;
 use std::fmt;
 
-/// Define some const. for pretty printing using ANSI colour codes.
+/// Define some constants for pretty printing using ANSI colour codes.
 pub const BOLD: &str = "\x1b[1m";
 pub const RED: &str = "\x1b[31;1m";
 pub const RESET: &str = "\x1b[0m";
@@ -39,6 +39,13 @@ impl fmt::Display for Errors {
 impl error::Error for Errors {}
 
 /// converts a curl command (with or without starting with `curl`) to a wget command
+///
+/// ## Example:
+///
+/// ```
+/// let input = "curl -H 'User-Agent: Mozilla...'"; 
+/// let wget = convert(&[input.to_string()]);
+/// ```
 pub fn convert(curl: &[String]) -> Result<String, Errors> {
     let curl_args = curl.join(" "); // this makes the input all one long string
     let mut args: Vec<String> = vec![];
