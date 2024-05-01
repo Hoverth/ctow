@@ -43,6 +43,8 @@ impl error::Error for Errors {}
 /// ## Example:
 ///
 /// ```
+/// use ctow::convert;
+///
 /// let input = "curl -H 'User-Agent: Mozilla...'"; 
 /// let wget = convert(&[input.to_string()]);
 /// ```
@@ -84,11 +86,13 @@ pub fn convert(curl: &[String]) -> Result<String, Errors> {
     Ok("wget ".to_owned() + &wget_args.join(" "))
 }
 
-/// converts a curl argument to a wget argument
+/// Converts a curl argument to a wget argument
 ///
 /// ## Example
 ///
 /// ```
+/// use ctow::convert_arg;
+///
 /// let curl_argument = "-H 'User-Agent: Mozilla...'";
 /// let wget_argument = convert_arg(curl_argument);
 /// ```
