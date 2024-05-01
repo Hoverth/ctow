@@ -96,7 +96,7 @@ pub fn convert(curl: &[String]) -> Result<String, Errors> {
 /// let curl_argument = "-H 'User-Agent: Mozilla...'";
 /// let wget_argument = convert_arg(curl_argument);
 /// ```
-fn convert_arg(arg: &str) -> Result<String, Errors> {
+pub fn convert_arg(arg: &str) -> Result<String, Errors> {
     // if it's the url, don't touch it
     if arg.starts_with("<url>") {
         Ok(String::from("<url>"))
