@@ -6,7 +6,7 @@ A simple rust binary utility to convert curl commands to wget commands.
 
 Available via `cargo install ctow` ([link to crates.io](https://crates.io/crates/ctow)).
 
-## Docs
+## Usage
 
 ctow can be used in two modes: command with arguments and as a command line interface
 
