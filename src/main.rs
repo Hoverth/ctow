@@ -18,7 +18,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
         while cond {
             // enter the cli, with a nice ">" prompt
-            print!("\x1b[1m> \x1b[0m");
+            print!("{BOLD}> {RESET}");
             match io::stdout().flush() {
                 Ok(()) => {
                     // if writing stdout worked, get the next line of input
