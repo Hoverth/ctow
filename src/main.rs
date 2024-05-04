@@ -28,10 +28,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                         Ok(_n) => {
                             // get and match the command
                             let command = input.split(' ').collect::<Vec<_>>()[0];
-                            println!("{GREY}{command}{RESET}");
                             match command {
-                                "help" => println!("help: prints this message\ncurl [...]: translates a curl command to a wget command\nexit: closes the program"),
+                                "help\n" => {
+                                    println!("{GREY}{command}{RESET}");
+                                    println!("help: prints this message\ncurl [...]: translates a curl command to a wget command\nexit: closes the program")
+                                },
                                 "curl" => {
+                                    println!("{GREY}{command}{RESET}");
                                     let wget = convert(&[input.trim_end().to_string()]);
                                     match wget {
                                         Ok(wget) => println!("{BOLD}Here's your command!{RESET}\n{wget}"),
@@ -40,7 +43,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                                 }
                                 "\n" => continue,
                                 "" => cond = false,
-                                "exit" => cond = false,
+                                "exit\n" => {
+                                    println!("{GREY}{command}{RESET}");
+                                    cond = false
+                                },
                                 _ => eprintln!("{RED}Unrecognised command: {}{RESET}", Errors::UnrecognisedCommand(command.trim_end().to_string())),
                             }
                         }
