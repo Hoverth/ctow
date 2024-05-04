@@ -27,7 +27,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     match io::stdin().read_line(&mut input) {
                         Ok(_n) => {
                             // get and match the command
-                            let command = input.split(' ').collect::<Vec<_>>()[0].trim_end();
+                            let command = input.split(' ').collect::<Vec<_>>()[0];
                             println!("{GREY}{command}{RESET}");
                             match command {
                                 "help" => println!("help: prints this message\ncurl [...]: translates a curl command to a wget command\nexit: closes the program"),
@@ -38,8 +38,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                                         Err(err) => eprintln!("{RED}Error encountered: {err}{RESET}"),
                                     }
                                 }
+                                "\n" => continue,
+                                "" => cond = false,
                                 "exit" => cond = false,
-                                _ => eprintln!("{RED}Unrecognised command: {}{RESET}", Errors::UnrecognisedCommand(command.to_string())),
+                                _ => eprintln!("{RED}Unrecognised command: {}{RESET}", Errors::UnrecognisedCommand(command.trim_end().to_string())),
                             }
                         }
                         Err(error) => eprintln!("{RED}There was an error: {error}{RESET}"),
