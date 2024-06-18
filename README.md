@@ -14,7 +14,7 @@ ctow can be used in two modes: command with arguments and as a command line inte
 
 You can simply pass `ctow [curl command]`, and ctow will print the converted command to stdout, with no formatting or anything when successful, so the output can be piped and manipulated into a command like `wget $(ctow [...])`, etc
 
-Do note that when passing in a curl command, you do not explicitly need to include the leading `curl`, as it is discarded anyway.
+Do note that when passing in a curl command, you do not explicitly need to include the leading `curl`, as it is discarded anyway. The options that curl uses (e.g. `-A User-Agent-Here`) __needs__ to have a space between the flag and its argument (this is a TODO).
 
 ### Command-Line Interface
 
